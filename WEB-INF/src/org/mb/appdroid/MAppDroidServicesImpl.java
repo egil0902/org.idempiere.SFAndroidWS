@@ -86,7 +86,7 @@ public class MAppDroidServicesImpl {
 		//red1 check for empty not null whereClause causing ' WHERE ' string.
 		if(rs.getString("whereClause") == null || rs.getString("whereClause").equals(""))
 			where.append("");
-		else
+		else if(!Env.getContext(m_adempiere.getCtx(), "#AD_User_ID").equals(null) && Env.getContext(m_adempiere.getCtx(), "#AD_User_ID").trim().length()>0)
 			where.append(" WHERE " + rs.getString("whereclause").replaceAll("%AD_User_ID%", Env.getContext(m_adempiere.getCtx(), "#AD_User_ID")));
 			//where.append(rs.getString("whereclause")!=""?" Where " + rs.getString("whereclause").replaceAll("%AD_User_ID%", "100"):"");//Env.getContext(m_adempiere.getCtx(), "#AD_User_ID")
 		where.append((where.length()>0?" AND (AD_Client_ID="+m_AD_Client_ID+" Or AD_Client_ID=0)":" WHERE (AD_Client_ID="+m_AD_Client_ID+" OR AD_Client_ID=0)"));
@@ -94,6 +94,7 @@ public class MAppDroidServicesImpl {
 		sql.append("SELECT * FROM "+rs.getString("tablename")+where.toString());
 		
 		//Preparing the Consultation
+		log.warning("la consulta: " + sql.toString());
 		PreparedStatement psquery = DB.prepareStatement(sql.toString());
 		ResultSet rsquery =psquery.executeQuery();
 		
