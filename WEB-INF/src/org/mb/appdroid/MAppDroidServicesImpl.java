@@ -146,7 +146,6 @@ public class MAppDroidServicesImpl {
 	}
 	protected boolean validateuser(InitialLoadDocument input)
 	{
-		log.warning("AQUITOY");
 		InitialLoad il = input.getInitialLoad();
 		return loggin(il.getUser(), il.getPass());
 	}
@@ -165,7 +164,10 @@ public class MAppDroidServicesImpl {
 	{
 		boolean m_loggin =false; 
 		Login loggin  = new Login(m_adempiere.getCtx()); 
-		KeyNamePair[] users =	loggin.getRoles (user, pass);
+		KeyNamePair[] clients2 = loggin.getClients(user, pass);
+
+		KeyNamePair[] users =	loggin.getRoles(user,clients2[0]);
+		
 		if (users!=null)
 		{
 			if(users.length>0)
